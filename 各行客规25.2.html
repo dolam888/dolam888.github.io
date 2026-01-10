@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每行8个项目的导航栏 - Flexbox方案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        /* 导航栏容器样式 */
+        nav {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        /* Flexbox布局 - 每行8个项目 */
+        nav ul {
+            display: flex;
+            flex-wrap: wrap; /* 关键属性：允许换行 */
+            list-style: none;
+            gap: 8px; /* 项目之间的间距 */
+        }
+        
+        /* 修改这里：每行显示8个项目，每个项目宽度为12.5%减去间距 */
+        nav ul li {
+            flex: 1 0 calc(12.5% - 8px); /* 每行显示8个项目 (100% / 8 = 12.5%) */
+            min-width: 110px; /* 最小宽度，防止项目过小 */
+        }
+        
+        nav ul li a {
+            display: block;
+            padding: 12px 8px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap; /* 防止文本换行 */
+            overflow: hidden;
+            text-overflow: ellipsis; /* 文本过长时显示省略号 */
+            font-size: 14px;
+        }
+        
+        nav ul li a:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 当前页面高亮效果 */
+        nav ul li a[href="./昆明航空.html"] {
+            background-color: #e74c3c;
+        }
+        
+        nav ul li a[href="./古诗.html"] {
+            background-color: #2ecc71;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1400px) {
+            nav ul li {
+                flex: 1 0 calc(16.666% - 8px); /* 每行6个项目 (100% / 6 = 16.666%) */
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            nav ul li {
+                flex: 1 0 calc(25% - 8px); /* 每行4个项目 (100% / 4 = 25%) */
+            }
+        }
+        
+        @media (max-width: 800px) {
+            nav ul li {
+                flex: 1 0 calc(33.333% - 8px); /* 每行3个项目 (100% / 3 = 33.333%) */
+            }
+        }
+        
+        @media (max-width: 600px) {
+            nav ul li {
+                flex: 1 0 calc(50% - 8px); /* 每行2个项目 (100% / 2 = 50%) */
+            }
+        }
+        
+        .info-box {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+html, body {
+    height: 100%; /* 确保html和body高度为100% */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* 确保body至少占满整个视口高度 */
+}
+
+/* 新增主内容区域样式 */
+.main-content {
+    flex: 1 0 auto; /* 自动增长，但不自动收缩 */
+    padding-bottom: 20px; /* 给页脚留出空间 */
+}
+  /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px 10px;
+    width: 100%;
+    flex-shrink: 0; /* 防止页脚收缩 */
+    margin-top: auto; /* 将页脚推到底部 */
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 0px;
+        }
+        
+        .footer-column h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        div{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>航空客票退改-行旅国际</h1>
+    
+    <!-- 导航栏 -->
+    <nav>
+        <ul>       
+            <li><a href="./中国国航.html">国航CA</a></li>
+            <li><a href="./南方航空.html">南方航空</a></li>
+            <li><a href="./东方航空.html">东方航空</a></li>
+            <li><a href="./厦门航空.html">厦门航空</a></li>
+            <li><a href="./深圳航空.html">深圳航空</a></li>
+            <li><a href="./四川航空.html">四川航空</a></li>
+            <li><a href="./长安航空.html">长安航空</a></li>
+            <li><a href="./联合航空.html">联合航空</a></li>
+            <li><a href="./text.html">山东航空</a></li>
+            <li><a href="./text.html">春秋航空</a></li>
+            <li><a href="./text.html">吉祥航空</a></li>
+            <li><a href="./text.html">天津航空</a></li>            
+            <li><a href="./text.html">西部航空</a></li>
+            <li><a href="./text.html">成都航空</a></li>
+            <li><a href="./text.html">西藏航空</a></li>
+            <li><a href="./text.html">华夏航空</a></li>
+            <li><a href="./昆明航空.html"><h3>昆明航空</h3></a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+            <li><a href="./text.html">青岛航空</a></li>
+        </ul>
+    </nav>
+    
+    <div class="info-box">
+        <h3>修改说明</h3>
+        <p>为了将每行显示项目数改为8个，我修改了以下CSS属性：</p>
+        <ol>
+            <li>将 <code>flex: 1 0 calc(12.5% - 8px)</code>（12.5% = 100% / 8）</li>
+            <li>调整了 <code>gap: 8px</code> 使间距更小以适应8个项目</li>
+            <li>调整了 <code>min-width: 110px</code> 使项目在8个一行时更紧凑</li>
+            <li>添加了响应式设计，在不同屏幕尺寸下每行显示不同数量的项目</li>
+        </ol>
+        <p>由于您有19个项目，每行8个会显示为：第一行8个，第二行8个，第三行3个。</p>
+    </div>
+</body>
+</html>
+
+<!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于我们</h4>
+                    <p>行旅国际</p>
+                    <div class="social-icons" style="margin-top: 20px;">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://webresource.airchina.com.cn/zh-CN/content/trans_conditions/refund/?hySource=airchina-pc&hyUploadType=series"><i class="fas fa-chevron-right"></i> 中国国航航空官网</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>联系方式</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> 13401095421</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 各航司退改规则.内部使用 保留所有权利. | 设计: 杨宗繁</p>
+            </div>
+        </div>
+    </footer>
+        
+      </footer>
+</body>
+</html>

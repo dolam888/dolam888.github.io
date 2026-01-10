@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每行8个项目的导航栏 - 手动分割方案</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        /* 导航栏容器样式 */
+        nav {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        /* 两行导航布局 */
+        .nav-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .nav-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .nav-row ul {
+            display: flex;
+            flex-wrap: wrap;
+            list-style: none;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        /* 修改这里：每行8个项目，每个项目宽度为12.5%减去间距 */
+        .nav-row ul li {
+            flex: 1 0 calc(12.5% - 8px); /* 每行8个项目 (100% / 8 = 12.5%) */
+            min-width: 100px;
+            max-width: 120px;
+        }
+        
+        .nav-row ul li a {
+            display: block;
+            padding: 10px 5px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 13px;
+        }
+        
+        .nav-row ul li a:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 第一行特殊样式 */
+        .row-1 ul li a {
+            background-color: #2c3e50;
+        }
+        
+        .row-1 ul li a:hover {
+            background-color: #34495e;
+        }
+        
+        /* 当前页面高亮效果 */
+        .nav-row ul li a[href="./昆明航空.html"] {
+            background-color: #e74c3c;
+        }
+        
+        .nav-row ul li a[href="./古诗.html"] {
+            background-color: #2ecc71;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1400px) {
+            .nav-row ul li {
+                flex: 1 0 calc(16.666% - 8px); /* 每行6个项目 */
+            }
+        }
+        
+        @media (max-width: 1100px) {
+            .nav-row ul li {
+                flex: 1 0 calc(25% - 8px); /* 每行4个项目 */
+            }
+        }
+        
+        @media (max-width: 800px) {
+            .nav-row ul li {
+                flex: 1 0 calc(33.333% - 8px); /* 每行3个项目 */
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-row ul li {
+                flex: 1 0 calc(50% - 8px); /* 每行2个项目 */
+            }
+        }
+        
+        .info-box {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+        
+        .info-box h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <h1>航空导航系统 - 手动分割（每行8个）</h1>
+    
+    <!-- 两行导航栏 -->
+    <nav>
+        <!-- 第一行导航（8个项目） -->
+        <div class="nav-row row-1">
+            <ul>       
+                <li><a href="./昆明航空.html">昆明航空</a></li>
+                <li><a href="./古诗.html">国航CA</a></li>
+                <li><a href="./text.html">东方航空</a></li>
+                <li><a href="#">联系</a></li>
+                <li><a href="./text.html">东航MU</a></li>
+                <li><a href="./text.html">南方航空</a></li>
+                <li><a href="./text.html">海南航空</a></li>
+                <li><a href="./text.html">四川航空</a></li>
+            </ul>
+        </div>
+        
+        <!-- 第二行导航（8个项目） -->
+        <div class="nav-row row-2">
+            <ul>
+                <li><a href="./text.html">深圳航空</a></li>
+                <li><a href="./text.html">厦门航空</a></li>
+                <li><a href="./text.html">山东航空</a></li>
+                <li><a href="./text.html">春秋航空</a></li>
+                <li><a href="./text.html">吉祥航空</a></li>
+                <li><a href="./text.html">天津航空</a></li>            
+                <li><a href="./text.html">西部航空</a></li>
+                <li><a href="./text.html">成都航空</a></li>
+            </ul>
+        </div>
+        
+        <!-- 第三行导航（3个项目） -->
+        <div class="nav-row row-3">
+            <ul>
+                <li><a href="./text.html">西藏航空</a></li>
+                <li><a href="./text.html">华夏航空</a></li>
+                <li><a href="./text.html">青岛航空</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="info-box">
+        <h3>修改说明</h3>
+        <p>为了将每行显示项目数改为8个，我做了以下修改：</p>
+        <ol>
+            <li>将每行项目数手动分割为8个</li>
+            <li>将CSS中的 <code>flex: 1 0 calc(12.5% - 8px)</code>（12.5% = 100% / 8）</li>
+            <li>调整了 <code>gap: 8px</code> 使间距更小</li>
+            <li>调整了 <code>min-width: 100px</code> 和 <code>max-width: 120px</code> 以适应8个项目的布局</li>
+            <li>由于有19个项目，所以创建了三行：第一行8个，第二行8个，第三行3个</li>
+        </ol>
+        <p>这种方案完全控制了每行的内容和数量，可以分别为每行设置不同的样式。</p>
+    </div>
+</body>
+</html>

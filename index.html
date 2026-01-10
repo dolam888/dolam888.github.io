@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双行导航栏网页示例</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 顶部导航栏（第一行） */
+        .top-navbar {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 8px 0;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .top-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* 顶部导航左侧（联系方式） */
+        .top-nav-left {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .contact-info i {
+            color: #3498db;
+        }
+        
+        /* 顶部导航右侧（社交媒体和登录） */
+        .top-nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .social-icons a {
+            color: #ecf0f1;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+        
+        .social-icons a:hover {
+            color: #3498db;
+        }
+        
+        .auth-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+        
+        .auth-links a:hover {
+            color: #3498db;
+        }
+        
+        .auth-links a:first-child {
+            margin-left: 0;
+        }
+        
+        /* 主导航栏（第二行） */
+        .main-navbar {
+            background-color: #ffffff;
+            padding: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .main-nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0;
+        }
+        
+        /* 网站Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-left: 10px;
+        }
+        
+        .logo span {
+            color: #3498db;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: #3498db;
+        }
+        
+        /* 主导航菜单 */
+        .main-nav {
+            display: flex;
+            list-style: none;
+        }
+        
+        .main-nav li {
+            position: relative;
+        }
+        
+        .main-nav a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 25px 20px;
+            display: block;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        
+        .main-nav a:hover {
+            color: #3498db;
+            background-color: #f8f9fa;
+        }
+        
+        /* 下拉菜单 */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s;
+            z-index: 100;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            border-bottom: 1px solid #f1f1f1;
+        }
+        
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-menu a {
+            padding: 15px 20px;
+            font-weight: 500;
+        }
+        
+        .dropdown-menu a:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        /* 搜索框和按钮 */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            width: 200px;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #3498db;
+            width: 250px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+        
+        .cta-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .cta-button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* 移动端菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+        
+        /* 主要内容区域 */
+        main {
+            padding: 40px 0;
+            min-height: 80vh;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 50px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h3 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h3::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background-color: #3498db;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 40px;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h4 {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h4 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: #3498db;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+            font-size: 14px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .main-nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                flex-direction: column;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+            
+            .main-nav.active {
+                display: flex;
+            }
+            
+            .main-nav li {
+                width: 100%;
+            }
+            
+            .main-nav a {
+                padding: 15px 20px;
+                border-bottom: 1px solid #f1f1f1;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                display: none;
+                background-color: #f8f9fa;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-actions {
+                display: none;
+            }
+            
+            .search-box input:focus {
+                width: 200px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-nav-container {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            
+            .top-nav-left, .top-nav-right {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .search-box input {
+                width: 150px;
+            }
+            
+            .search-box input:focus {
+                width: 150px;
+            }
+            
+            .hero {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 第一行导航栏（顶部信息栏） -->
+    <nav class="top-navbar">
+        <div class="container top-nav-container">
+            <div class="top-nav-left">
+                <div class="contact-info">
+                    <i class="fas fa-phone"></i>
+                    <span>400-123-4567</span>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>contact@example.com</span>
+                </div>
+            </div>
+            <div class="top-nav-right">
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                </div>
+                <div class="auth-links">
+                    <a href="#"><i class="fas fa-user"></i> 登录</a>
+                    <a href="#"><i class="fas fa-user-plus"></i> 注册</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 第二行导航栏（主导航栏） -->
+    <nav class="main-navbar">
+        <div class="container main-nav-container">
+            <!-- Logo -->
+            <div class="logo">
+                <i class="fas fa-cube logo-icon"></i>
+                <h1>网站<span>Logo</span></h1>
+            </div>
+            
+            <!-- 主导航菜单 -->
+            <ul class="main-nav">
+                <li><a href="#"><i class="fas fa-home"></i> 首页</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="fas fa-th-large"></i> 产品 <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">产品一</a></li>
+                        <li><a href="#">产品二</a></li>
+                        <li><a href="#">产品三</a></li>
+                        <li><a href="#">产品四</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-info-circle"></i> 关于我们</a></li>
+                <li class="dropdown">
+                    <a href="#"><i class="fas fa-cogs"></i> 服务 <i class="fas fa-chevron-down" style="font-size: 12px; margin-left: 5px;"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">服务一</a></li>
+                        <li><a href="#">服务二</a></li>
+                        <li><a href="#">服务三</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fas fa-images"></i> 案例</a></li>
+                <li><a href="#"><i class="fas fa-newspaper"></i> 新闻</a></li>
+                <li><a href="#"><i class="fas fa-envelope"></i> 联系我们</a></li>
+            </ul>
+            
+            <!-- 搜索框和按钮 -->
+            <div class="nav-actions">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="搜索...">
+                </div>
+                <button class="cta-button">免费试用</button>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- 网页主要内容 -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>双行导航栏网页示例</h2>
+                <p>这是一个展示双行导航栏设计的响应式网页。第一行导航栏包含联系信息和社交媒体链接，第二行导航栏包含网站Logo、主导航菜单和功能按钮。</p>
+                <button class="cta-button" style="font-size: 18px; padding: 15px 30px;">了解更多</button>
+            </div>
+        </section>
+        
+        <div class="container">
+            <section class="section-title">
+                <h3>主要功能</h3>
+                <p>我们的双行导航栏设计提供了卓越的用户体验和视觉吸引力</p>
+            </section>
+            
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h4>双层结构</h4>
+                    <p>第一行导航栏展示联系方式和社交链接，第二行导航栏包含主要导航菜单和功能按钮，结构清晰。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>响应式设计</h4>
+                    <p>在桌面端和移动端都能完美显示，移动端自动转换为汉堡菜单，确保所有设备上的优秀体验。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>美观现代</h4>
+                    <p>采用现代化设计，包含阴影、悬停效果和流畅的动画，提升整体视觉吸引力。</p>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>关于我们</h4>
+                    <p>我们致力于提供优秀的网页设计和开发服务，专注于用户体验和视觉设计。</p>
+                    <div class="social-icons" style="margin-top: 20px;">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                        <a href="#"><i class="fab fa-qq"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 首页</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 关于我们</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 产品服务</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 案例展示</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> 联系我们</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>联系方式</h4>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> 北京市朝阳区XX路XX号</li>
+                        <li><i class="fas fa-phone"></i> 400-123-4567</li>
+                        <li><i class="fas fa-envelope"></i> contact@example.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2023 双行导航栏网页示例. 保留所有权利. | 设计: 前端开发</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单切换
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.querySelector('.main-nav');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            mobileMenuBtn.innerHTML = mainNav.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // 移动端下拉菜单切换
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', (e) => {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    dropdown.classList.toggle('active');
+                }
+            });
+        });
+        
+        // 点击页面其他区域关闭移动菜单
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.main-nav') && !e.target.closest('#mobileMenuBtn')) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // 关闭所有下拉菜单
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+        
+        // 窗口大小改变时重置菜单
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                mainNav.classList.remove('active');
+                mobileMenuBtn.innerHTML = '<i class="fas fa-bars"></i>';
+                
+                // 重置所有下拉菜单
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
